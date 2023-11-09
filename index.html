@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>QR Code Attendance</title>
+    <title>Attendance QR Code</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -131,7 +131,7 @@
     </style>
 </head>
 <body>
-    <h1>QR Code Attendance</h1>
+    <h1>Attendance QR Code</h1>
     <label for="studentName">Student Name:</label>
     <input type="text" id="studentName" placeholder="Enter your name" oninput="checkName(this)">
     <p id="nameError">Name should contain only English letters and spaces</p>
@@ -143,7 +143,7 @@
     <button onclick="generateQR()">Generate QR Code</button>
     <div id="qrcode"></div>
     <p class="createdByHashem" style="display: block;">Created by Hashem</p>
-    <p id="errorText">Please fix the errors before proceeding</p>
+    <p id="errorText">Please fill in both fields before proceeding</p>
     
 
     <script src="qrcode.min.js"></script>
