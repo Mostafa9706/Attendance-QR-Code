@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Attendance</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: slideInFromLeft 1s;
+        }
+        @keyframes slideInFromLeft {
+            from {
+                margin-left: -100px;
+                opacity: 0;
+            }
+            to {
+                margin-left: 0;
+                opacity: 1;
+            }
+        }
+        label {
+            font-size: 18px;
+            letter-spacing: 1px;
+            animation: slideInFromTop 1s;
+            margin-bottom: 15px;
+        }
+        @keyframes slideInFromTop {
+            from {
+                margin-top: -50px;
+                opacity: 0;
+            }
+            to {
+                margin-top: 0;
+                opacity: 1;
+            }
+        }
+        input {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            border: 1px solid #1ED760;
+            background-color: #222;
+            color: #fff;
+            width: 250px;
+            animation: slideInFromBottom 1s;
+        }
+        @keyframes slideInFromBottom {
+            from {
+                margin-top: 50px;
+                opacity: 0;
+            }
+            to {
+                margin-top: 0;
+                opacity: 1;
+            }
+        }
+        button {
+            padding: 15px 30px;
+            background-color: #1ED760;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            animation: fadeIn 1s;
+        }
+        button:hover {
+            background-color: #23ea6e;
+        }
+        #qrcode {
+            margin-top: 20px;
+            animation: zoomIn 1s;
+        }
+        @keyframes zoomIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        p {
+            font-size: 12px;
+            opacity: 0.7;
+            animation: slideInFromBottom 1s;
+            color: #ff5555;
+            display: none;
+            
+        }
+        .createdByHashem {
+            color: rgb(255, 255, 255); 
+            font-weight: bold; /* Make the text bold */
+}
+        @keyframes slideInFromBottom {
+            from {
+                margin-top: 50px;
+                opacity: 0;
+            }
+            to {
+                margin-top: 0;
+                opacity: 1;
+            }
+        
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>QR Code Attendance</h1>
+    <label for="studentName">Student Name:</label>
+    <input type="text" id="studentName" placeholder="Enter your name" oninput="checkName(this)">
+    <p id="nameError">Name should contain only English letters and spaces</p>
+    <br/>
+    <label for="studentID">Student ID:</label>
+    <input type="text" id="studentID" placeholder="Enter your ID" oninput="checkID(this)">
+    <p id="idError">ID should be 8 English digits</p>
+    <br/>
+    <button onclick="generateQR()">Generate QR Code</button>
+    <div id="qrcode"></div>
+    <p class="createdByHashem" style="display: block;">Created by Hashem</p>
+    <p id="errorText">Please fix the errors before proceeding</p>
+    
+
+    <script src="qrcode.min.js"></script>
+    <script>
+        function generateQR() {
+            const name = document.getElementById('studentName').value;
+            const id = document.getElementById('studentID').value;
+
+            const nameRegex = /^[a-zA-Z\s]*$/;
+            const idRegex = /^[0-9]{8}$/;
+
+            const nameIsValid = nameRegex.test(name);
+            const idIsValid = idRegex.test(id);
+
+            if (!nameIsValid) {
+                document.getElementById('nameError').style.display = 'block';
+            } else {
+                document.getElementById('nameError').style.display = 'none';
+            }
+
+            if (!idIsValid) {
+                document.getElementById('idError').style.display = 'block';
+            } else {
+                document.getElementById('idError').style.display = 'none';
+            }
+
+            if (nameIsValid && idIsValid) {
+                document.getElementById('errorText').style.display = 'none';
+
+                const text = `Name: ${name}, ID: ${id}`;
+                const qrcode = new QRCode(document.getElementById("qrcode"), {
+                    text: text,
+                    width: 200,
+                    height: 200
+                });
+            } else {
+                document.getElementById('errorText').style.display = 'block';
+            }
+        }
+
+        function checkName(input) {
+            const name = input.value;
+            const nameRegex = /^[a-zA-Z\s]*$/;
+            if (!nameRegex.test(name)) {
+                document.getElementById('nameError').style.display = 'block';
+            } else {
+                document.getElementById('nameError').style.display = 'none';
+            }
+        }
+
+        function checkID(input) {
+            const id = input.value;
+            const idRegex = /^[0-9]{8}$/;
+            if (!idRegex.test(id)) {
+                document.getElementById('idError').style.display = 'block';
+            } else {
+                document.getElementById('idError').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
