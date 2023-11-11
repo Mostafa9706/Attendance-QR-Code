@@ -5,7 +5,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #121212;
+            background-color: #0C0705;
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -115,7 +115,7 @@
         .createdByHashem {
             color: rgb(255, 255, 255); 
             font-weight: bold;
-}
+        }
         @keyframes slideInFromBottom {
             from {
                 margin-top: 50px;
@@ -126,6 +126,12 @@
                 opacity: 1;
             }
         
+        }
+
+        #qrcode {
+            margin-top: 20px;
+            animation: zoomIn 1s;
+            border: 5px solid #fff; /* Add a white border around the QR code */
         }
         
     </style>
@@ -171,18 +177,23 @@
             }
 
             if (nameIsValid && idIsValid) {
-                document.getElementById('errorText').style.display = 'none';
+             document.getElementById('errorText').style.display = 'none';
 
-                const text = `Name: ${name}, ID: ${id}`;
-                const qrcode = new QRCode(document.getElementById("qrcode"), {
-                    text: text,
+                // Customize QR code styling options here
+                const qrOptions = {
+                    text: `Name: ${name}, ID: ${id}`,
                     width: 200,
-                    height: 200
-                });
+                    height: 200,
+                    colorDark: "#000000",  // Dark module color
+                    colorLight: "#ffffff", // Light module color
+                    correctLevel: QRCode.CorrectLevel.H, // Error correction level
+            };
+
+            const qrcode = new QRCode(document.getElementById("qrcode"), qrOptions);
             } else {
                 document.getElementById('errorText').style.display = 'block';
             }
-        }
+            }
 
         function checkName(input) {
             const name = input.value;
