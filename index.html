@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance QR Code</title>
     <style>
-                /* Add media query for smaller screens */
+        /* Add media query for smaller screens */
         @media only screen and (max-width: 600px) {
             body {
                 padding: 10px; /* Adjust padding for smaller screens */
@@ -19,6 +20,7 @@
                 width: 100%; /* Make input fields full width on smaller screens */
             }
         }
+
         body {
             font-family: 'Arial', sans-serif;
             background-color: #0C0705;
@@ -32,14 +34,17 @@
             padding: 20px;
             animation: fadeIn 1s;
         }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
         }
+
         h1 {
             font-size: 36px;
             margin-bottom: 20px;
@@ -48,32 +53,38 @@
             letter-spacing: 2px;
             animation: slideInFromLeft 1s;
         }
+
         @keyframes slideInFromLeft {
             from {
                 margin-left: -100px;
                 opacity: 0;
             }
+
             to {
                 margin-left: 0;
                 opacity: 1;
             }
         }
+
         label {
             font-size: 18px;
             letter-spacing: 1px;
             animation: slideInFromTop 1s;
             margin-bottom: 15px;
         }
+
         @keyframes slideInFromTop {
             from {
                 margin-top: -50px;
                 opacity: 0;
             }
+
             to {
                 margin-top: 0;
                 opacity: 1;
             }
         }
+
         input {
             padding: 10px;
             margin-bottom: 20px;
@@ -84,16 +95,23 @@
             width: 250px;
             animation: slideInFromBottom 1s;
         }
+
+        input:focus {
+            outline: unset;
+        }
+
         @keyframes slideInFromBottom {
             from {
                 margin-top: 50px;
                 opacity: 0;
             }
+
             to {
                 margin-top: 0;
                 opacity: 1;
             }
         }
+
         button {
             padding: 15px 30px;
             background-color: #1ED760;
@@ -105,43 +123,51 @@
             transition: background-color 0.3s;
             animation: fadeIn 1s;
         }
+
         button:hover {
             background-color: #23ea6e;
         }
+
         #qrcode {
             margin-top: 20px;
             animation: zoomIn 1s;
         }
+
         @keyframes zoomIn {
             from {
                 transform: scale(0);
             }
+
             to {
                 transform: scale(1);
             }
         }
+
         p {
             font-size: 12px;
             opacity: 0.7;
             animation: slideInFromBottom 1s;
             color: #ff5555;
             display: none;
-            
+
         }
+
         .createdByHashem {
-            color: rgb(255, 255, 255); 
+            color: rgb(255, 255, 255);
             font-weight: bold;
         }
+
         @keyframes slideInFromBottom {
             from {
                 margin-top: 50px;
                 opacity: 0;
             }
+
             to {
                 margin-top: 0;
                 opacity: 1;
             }
-        
+
         }
 
         #qrcode {
@@ -149,24 +175,25 @@
             animation: zoomIn 1s;
             border: 5px solid #fff; /* Add a white border around the QR code */
         }
-        
     </style>
 </head>
+
 <body>
     <h1>Attendance System</h1>
     <label for="studentName">Student Name:</label>
     <input type="text" id="studentName" placeholder="Enter your name" oninput="checkName(this)">
     <p id="nameError">Name should contain only English letters and spaces</p>
-    <br/>
+    <br />
     <label for="studentID">Student ID:</label>
     <input type="text" id="studentID" placeholder="Enter your ID" oninput="checkID(this)">
     <p id="idError">ID should be 8 English digits</p>
-    <br/>
-    <button onclick="generateQR()">Generate QR Code</button>
-    <div id="qrcode"></div>
+    <br />
+    <button onclick="generateQR()" id="qrGenerator">Generate QR Code</button>
+    <button onclick="location.reload()" style="display: none;" id="reload">Regenerate QR Code</button>
+    <div id="qrcode" style="display: none;"></div>
     <p class="createdByHashem" style="display: block;">Created by Hashem</p>
     <p id="errorText">Please fill in both fields before proceeding</p>
-    
+
 
     <script src="qrcode.min.js"></script>
     <script>
@@ -193,7 +220,7 @@
             }
 
             if (nameIsValid && idIsValid) {
-             document.getElementById('errorText').style.display = 'none';
+                document.getElementById('errorText').style.display = 'none';
 
                 // Customize QR code styling options here
                 const qrOptions = {
@@ -203,13 +230,18 @@
                     colorDark: "#000000",  // Dark module color
                     colorLight: "#ffffff", // Light module color
                     correctLevel: QRCode.CorrectLevel.H, // Error correction level
-            };
+                };
 
-            const qrcode = new QRCode(document.getElementById("qrcode"), qrOptions);
+                const qrcode = new QRCode(document.getElementById("qrcode"), qrOptions);
+                document.getElementById("qrcode").style.display = 'block';
+                document.getElementById("qrGenerator").style.display = 'none';
+                document.getElementById("reload").style.display = 'block';
+                document.getElementById("studentName").readOnly = true;
+                document.getElementById("studentID").readOnly = true;
             } else {
                 document.getElementById('errorText').style.display = 'block';
             }
-            }
+        }
 
         function checkName(input) {
             const name = input.value;
@@ -232,4 +264,5 @@
         }
     </script>
 </body>
+
 </html>
